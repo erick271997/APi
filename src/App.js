@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { useEffect, useState } from 'react';
+
 
 function App() {
+  const[nombre, setNombre]= useState=('');
+  const[imagen, setImgane]= useState=('');
+
+useEffect(()=>{
+const url= " https://randomuser.me/api/ " ;
+const peticion=fetch(url);
+
+  peticion
+  .then(datos=>datos.json())
+  .then(lectura=>{
+    setNombre(` ${lectura.results[0].name.first}` ` ${lectura.results[0].name.last}`)
+  })
+  .catch(()=>console.log('Mal'))
+
+  },[])
+
+  
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Empleado/a</h1>
+      {nombre}
+      <div>
+        <img src={imagen} alt=""/>
+      </div>
+    </>
   );
 }
 

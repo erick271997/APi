@@ -3,18 +3,31 @@ import { useEffect, useState } from 'react';
 
 
 function App() {
-  const[nombre, setNombre]= useState('');
-  const[imagen, setImagen]= useState('');
+  const[datos, setdatos]= useState ([]);
+  
 
 useEffect(()=>{
-const url= "https://randomuser.me/api/";
+const url= "https://randomuser.me/api/?results=3";
 const peticion=fetch(url);
 
 peticion
       .then(datos => datos.json())
       .then(lectura => {
-        setNombre(`${lectura.results[0].name.first} ${lectura.results[0].name.last}`);
-        setImagen(lectura.results[0].picture.large);
+        lectura.results.map((persona)=>{
+
+        
+          setdatos((e)=>
+
+        
+         [ ...e ,<div key={persona.email}>
+            <div>{persona.name.first} {persona.name.last}</div>
+          <div>
+            <img src={persona.picture.large} alt='imagen'/>
+          </div>
+          
+          </div>  ]
+          )
+        })
       })
       .catch(() => console.log('Mal'))
 
@@ -25,10 +38,9 @@ peticion
   return (
     <>
       <h1>Empleado/a</h1>
-      {nombre}
+      {datos}
  
       <div>
-        <img src={imagen} alt=""/>
       </div>
     </>
   );
